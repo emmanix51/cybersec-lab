@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITF 101 · Cyber Defense Simulator (Weeks 15 & 16 Lab)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- TOPBAR / STUDENT PROFILE -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="shield-logo">🛡️</div>
+      <div>
+        <div class="kicker">ITF 101 · WEEKS 15 &amp; 16 INTERACTIVE LAB</div>
+        <h1>Cyber Defense Simulator</h1>
+      </div>
+    </div>
+
+    <div class="student-bar">
+      <div class="input-group">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" placeholder="e.g., Juan Dela Cruz" autocomplete="off" />
+      </div>
+      <div class="input-group small">
+        <label for="studentSection">Section / Block</label>
+        <input type="text" id="studentSection" placeholder="e.g., BSIT-1A" autocomplete="off" />
+      </div>
+      <div class="score-pill" id="overallScorePill">
+        <span class="score-label">TOTAL LAB SCORE</span>
+        <strong id="totalLabScore">0 / 100</strong>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="module-tabs" aria-label="Lab Modules">
+    <button class="tab-btn active" data-tab="phish">
+      <span class="tab-num">MODULE 1</span>
+      <span class="tab-title">🎣 Spot the Phish (UI Inspector)</span>
+      <span class="tab-badge" id="badgePhish">0 / 24 Found</span>
+    </button>
+    <button class="tab-btn" data-tab="forge">
+      <span class="tab-num">MODULE 2</span>
+      <span class="tab-title">🔐 Passphrase Forge &amp; 3-2-1 Backup</span>
+      <span class="tab-badge" id="badgeForge">0 / 2 Done</span>
+    </button>
+    <button class="tab-btn" data-tab="audit">
+      <span class="tab-num">MODULE 3</span>
+      <span class="tab-title">📱 My Device Security Scorecard</span>
+      <span class="tab-badge" id="badgeAudit">Score: 0%</span>
+    </button>
+    <button class="tab-btn" data-tab="report">
+      <span class="tab-num">FINAL REPORT</span>
+      <span class="tab-title">🏆 Lab Certificate &amp; Summary</span>
+      <span class="tab-badge" id="badgeReport">View</span>
+    </button>
+  </nav>
+
+  <main class="container">
+    <!-- =======================================================================
+         MODULE 1: SPOT THE PHISH (CLONED UI INSPECTOR)
+    ======================================================================== -->
+    <section id="tab-phish" class="tab-panel active">
+      <div class="module-intro">
+        <div>
+          <h2>Module 1 · Spot the Phish: Interactive UI Inspector</h2>
+          <p>
+            Inspect the <strong>4 realistic cloned interfaces</strong> below (Gmail, Smartphone SMS, Fake Web Login, and Campus Email).
+            <strong>Click directly on the suspicious elements</strong> in the UI and identify <em>why</em> each one is a phishing red flag!
+          </p>
+        </div>
+        <div class="hint-controls">
+          <button class="btn-secondary" id="toggleHintsBtn" type="button">💡 Highlight Unfound Clues (Hint)</button>
+        </div>
+      </div>
+
+      <!-- SCENARIO SELECTOR -->
+      <div class="scenario-bar" id="scenarioSelector">
+        <button class="scenario-tab active" data-scene="gmail">
+          <span class="sc-icon">✉️</span>
+          <div>
+            <div class="sc-title">Case 1: Gmail Security Alert</div>
+            <div class="sc-prog" id="prog-gmail">0 / 7 Flags Found</div>
+          </div>
+        </button>
+        <button class="scenario-tab" data-scene="sms">
+          <span class="sc-icon">📱</span>
+          <div>
+            <div class="sc-title">Case 2: GCash &amp; Bank SMS</div>
+            <div class="sc-prog" id="prog-sms">0 / 6 Flags Found</div>
+          </div>
+        </button>
+        <button class="scenario-tab" data-scene="web">
+          <span class="sc-icon">🌐</span>
+          <div>
+            <div class="sc-title">Case 3: Fake Login Webpage</div>
+            <div class="sc-prog" id="prog-web">0 / 6 Flags Found</div>
+          </div>
+        </button>
+        <button class="scenario-tab" data-scene="campus">
+          <span class="sc-icon">🎓</span>
+          <div>
+            <div class="sc-title">Case 4: Scholarship Grant Email</div>
+            <div class="sc-prog" id="prog-campus">0 / 5 Flags Found</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="inspector-layout">
+        <!-- LEFT: CLONED UI STAGE -->
+        <div class="ui-stage" id="uiStage">
+
+          <!-- ==================== SCENE 1: GMAIL CLONE ==================== -->
+          <div class="scene active" id="scene-gmail">
+            <div class="gmail-window">
+              <!-- Gmail Top Bar -->
+              <div class="gmail-topbar">
+                <div class="gmail-brand">
+                  <span class="gmail-hamburger">☰</span>
+                  <span class="gmail-logo-icon">M</span>
+                  <span class="gmail-logo-text">WebMail</span>
+                </div>
+                <div class="gmail-search">🔍 Search in mail</div>
+                <div class="gmail-profile">JD</div>
+              </div>
+
+              <div class="gmail-body">
+                <!-- Sidebar -->
+                <div class="gmail-sidebar">
+                  <div class="gmail-compose">✏️ Compose</div>
+                  <div class="gmail-nav-item active">📥 Inbox <span>4</span></div>
+                  <div class="gmail-nav-item">⭐ Starred</div>
+                  <div class="gmail-nav-item">🕒 Snoozed</div>
+                  <div class="gmail-nav-item">📤 Sent</div>
+                  <div class="gmail-nav-item">⚠️ Spam</div>
+                </div>
+
+                <!-- Email Content -->
+                <div class="gmail-Pane">
+                  <div class="gmail-toolbar">
+                    <span>← Back to Inbox</span>
+                    <span>🗑️ Delete</span>
+                    <span>🚫 Report phishing</span>
+                  </div>
+
+                  <div class="gmail-subject-row">
+                    <span class="phish-spot" data-scene="gmail" data-id="g1">
+                      [URGENT] Final Notice: Your Google &amp; Student Account Will Be Deleted in 30 Minutes!!
+                    </span>
+                    <span class="gmail-tag">Inbox ×</span>
+                  </div>
+
+                  <div class="gmail-sender-row">
+                    <div class="gmail-avatar">G</div>
+                    <div class="gmail-sender-meta">
+                      <div class="sender-line">
+                        <strong>Google Security Support Team</strong>
+                        <span class="phish-spot sender-email" data-scene="gmail" data-id="g2">
+                          &lt;security-alert@g00gle-account-verify.ru&gt;
+                        </span>
+                      </div>
+                      <div class="to-line">
+                        to me · <span class="phish-spot" data-scene="gmail" data-id="g3">via mailer.unverified-bulk-host.net (⚠️ Not encrypted)</span>
+                      </div>
+                    </div>
+                    <div class="gmail-time">10:42 PM (12 minutes ago)</div>
+                  </div>
+
+                  <div class="gmail-message-body">
+                    <p>
+                      <span class="phish-spot" data-scene="gmail" data-id="g4">Dear Valued Customer User,</span>
+                    </p>
+                    <p>
+                      We detected an unauthorized login attempt to your account from an unknown device. Because of this violation, your email, Google Drive, and photos have been scheduled for <strong>permanent deletion</strong>.
+                    </p>
+                    <p>
+                      <span class="phish-spot" data-scene="gmail" data-id="g5">
+                        If you do not verify your identity within the next 30 minutes, all your school files and contacts will be erased forever with no recovery possible!
+                      </span>
+                    </p>
+
+                    <div class="gmail-cta-box">
+                      <button type="button" class="gmail-cta-btn phish-spot" data-scene="gmail" data-id="g6" title="Hover preview: http://bit.ly/3xFakeGoogleLogin-verify-now">
+                        🔒 KEEP MY ACCOUNT ACTIVE NOW
+                      </button>
+                      <div class="link-preview">
+                        Link destination: <code>http://login.g00gle-verify-session.xyz/auth.php</code>
+                      </div>
+                    </div>
+
+                    <p>
+                      Alternatively, please open the attached security recovery tool below and reply to this email with your current password and 6-digit SMS OTP code.
+                    </p>
+
+                    <div class="gmail-attachment phish-spot" data-scene="gmail" data-id="g7">
+                      <div class="att-icon">⚙️</div>
+                      <div class="att-info">
+                        <div class="att-name">Account_Recovery_Tool_2026.pdf.exe</div>
+                        <div class="att-size">2.4 MB · Windows Executable</div>
+                      </div>
+                      <span class="att-dl">⬇</span>
+                    </div>
+
+                    <p class="gmail-sig">
+                      Thank you,<br />
+                      <strong>The Google Account Security Department</strong><br />
+                      Mountain View, California
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== SCENE 2: SMS / SMARTPHONE CLONE ==================== -->
+          <div class="scene" id="scene-sms">
+            <div class="phone-frame">
+              <div class="phone-notch"></div>
+              <div class="phone-statusbar">
+                <span>9:41 PM</span>
+                <span>📶 5G 🔋 84%</span>
+              </div>
+
+              <div class="phone-header">
+                <span class="phone-back">‹ Messages</span>
+                <div class="phone-contact">
+                  <div class="phone-avatar">💬</div>
+                  <div class="phish-spot" data-scene="sms" data-id="s1">
+                    <div class="contact-num">+63 994 817 2049</div>
+                    <div class="contact-sub">Unknown Sender · Not in Contacts</div>
+                  </div>
+                </div>
+                <span class="phone-info">ⓘ</span>
+              </div>
+
+              <div class="phone-chat">
+                <div class="chat-date">Today · 9:38 PM</div>
+
+                <!-- Message 1: Fake GCash -->
+                <div class="sms-bubble">
+                  <div class="sms-tag">SMS · Text Message</div>
+                  <p>
+                    <strong>[GCash-Advisory]</strong>
+                    <span class="phish-spot" data-scene="sms" data-id="s2">
+                      ALERT! Your GCash wallet has been TEMPORARILY FROZEN due to incomplete SIM KYC verification.
+                    </span>
+                  </p>
+                  <p>
+                    To avoid a <strong>₱5,000 penalty fee</strong> and permanent account closure tonight, update your account immediately at:
+                  </p>
+                  <p>
+                    <span class="sms-link phish-spot" data-scene="sms" data-id="s3">
+                      http://gcash-portal-ph-verify.top/login
+                    </span>
+                  </p>
+                  <p>
+                    <span class="phish-spot" data-scene="sms" data-id="s4">
+                      Once logged in, enter your 4-digit MPIN and the 6-digit OTP code sent to your phone to unlock your balance.
+                    </span>
+                  </p>
+                </div>
+
+                <!-- Message 2: Fake Prize / Job Smishing -->
+                <div class="sms-bubble">
+                  <div class="sms-tag">SMS · Text Message</div>
+                  <p>
+                    🎉 <span class="phish-spot" data-scene="sms" data-id="s5">
+                      CONGRATULATIONS! Your mobile number won ₱50,000 Cash + iPhone 16 Pro in our Anniversary Raffle Draw!
+                    </span>
+                  </p>
+                  <p>
+                    <span class="phish-spot" data-scene="sms" data-id="s6">
+                      To release your prize today, send a ₱1,500 processing &amp; shipping fee via GCash to 0917-XXX-XXXX within 1 hour.
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="phone-inputbar">
+                <div class="fake-input">Text Message</div>
+                <div class="fake-send">↑</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== SCENE 3: FAKE WEB LOGIN CLONE ==================== -->
+          <div class="scene" id="scene-web">
+            <div class="browser-window">
+              <!-- Browser Tabs -->
+              <div class="browser-tabbar">
+                <div class="win-dots">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                </div>
+                <div class="browser-tab">
+                  🌐 BDO Unibank Online Banking — Account Unlock
+                </div>
+              </div>
+
+              <!-- Browser Address Bar -->
+              <div class="browser-navbar">
+                <div class="nav-arrows">← → ↻</div>
+                <div class="address-bar">
+                  <span class="http-warning phish-spot" data-scene="web" data-id="w1">
+                    🔓 Not Secure | http://
+                  </span>
+                  <span class="domain-text phish-spot" data-scene="web" data-id="w2">
+                    www.bd0-online-banking-ph.xyz
+                  </span>
+                  <span class="path-text">/security-unlock/index.php</span>
+                </div>
+              </div>
+
+              <!-- Webpage Content -->
+              <div class="webpage-canvas">
+                <div class="bank-banner">
+                  <div class="bank-logo">BD0 UNIBANK ONLINE</div>
+                  <div class="phish-spot countdown-pill" data-scene="web" data-id="w3">
+                    ⏳ SESSION EXPIRES IN 02:14 — VERIFY NOW OR ACCOUNT WILL BE LOCKED!
+                  </div>
+                </div>
+
+                <div class="bank-card">
+                  <h3>Mandatory Security Verification Form</h3>
+                  <p class="bank-sub">Please confirm your full credentials below to restore your online banking access.</p>
+
+                  <div class="form-row">
+                    <label>Online Banking Username &amp; Password</label>
+                    <input type="text" disabled value="juan_delacruz2026" />
+                  </div>
+
+                  <div class="form-row phish-spot" data-scene="web" data-id="w4">
+                    <label>💳 Full 16-Digit ATM Card Number + 3-Digit CVV (Back of Card) + ATM PIN</label>
+                    <input type="text" disabled placeholder="4532 •••• •••• ••••   |   CVV: •••   |   ATM PIN: ••••" />
+                  </div>
+
+                  <div class="form-row phish-spot" data-scene="web" data-id="w5">
+                    <label>🔑 Enter 6-Digit One-Time Password (OTP) &amp; Mother's Maiden Name</label>
+                    <input type="text" disabled placeholder="Enter 6-digit SMS OTP code here..." />
+                  </div>
+
+                  <button type="button" class="bank-submit-btn">VERIFY &amp; UNLOCK ACCOUNT</button>
+
+                  <div class="bank-footer phish-spot" data-scene="web" data-id="w6">
+                    © 2019 BDO Unibank Inc. All Right Reserve. Need help? Contact Official Support at <strong>bdo.helpdesk.verify@gmail.com</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================== SCENE 4: CAMPUS SCHOLARSHIP EMAIL ==================== -->
+          <div class="scene" id="scene-campus">
+            <div class="gmail-window">
+              <div class="gmail-topbar campus-theme">
+                <div class="gmail-brand">
+                  <span class="gmail-hamburger">☰</span>
+                  <span class="gmail-logo-icon">🎓</span>
+                  <span class="gmail-logo-text">CampusMail</span>
+                </div>
+                <div class="gmail-search">🔍 Search student mail</div>
+                <div class="gmail-profile">SPC</div>
+              </div>
+
+              <div class="gmail-body">
+                <div class="gmail-Pane">
+                  <div class="gmail-subject-row">
+                    <span>[STUDENT GRANT] ₱15,000 CHED-SPC Financial Aid Disbursement Notice</span>
+                    <span class="gmail-tag">External Sender</span>
+                  </div>
+
+                  <div class="gmail-sender-row">
+                    <div class="gmail-avatar">S</div>
+                    <div class="gmail-sender-meta">
+                      <div class="sender-line">
+                        <strong>SPC Office of Student Affairs &amp; Scholarships</strong>
+                        <span class="phish-spot sender-email" data-scene="campus" data-id="c1">
+                          &lt;spc.scholarship.claim2026@hotmail.com&gt;
+                        </span>
+                      </div>
+                      <div class="to-line">
+                        Reply-To: <code>claim-grant-fast@yahoo.com</code>
+                      </div>
+                    </div>
+                    <div class="gmail-time">Today, 4:15 PM</div>
+                  </div>
+
+                  <div class="gmail-message-body">
+                    <p>Good day Student,</p>
+                    <p>
+                      You have been selected to receive a <strong>₱15,000.00 Cash Tuition &amp; Allowance Grant</strong> for this semester.
+                    </p>
+                    <p>
+                      <span class="phish-spot" data-scene="campus" data-id="c2">
+                        ONLY 5 SLOTS REMAINING! First-come, first-served. This link will automatically close in 15 minutes if you do not submit your form!
+                      </span>
+                    </p>
+                    <p>
+                      <span class="phish-spot" data-scene="campus" data-id="c3">
+                        To claim your grant, please reply directly to this email with your Student Portal Email, Portal Password, and your GCash MPIN so our cashier can deposit the funds.
+                      </span>
+                    </p>
+                    <p>
+                      You must also download and run the Scholarship Application Installer on your Windows laptop:
+                    </p>
+
+                    <div class="gmail-attachment phish-spot" data-scene="campus" data-id="c4">
+                      <div class="att-icon">📦</div>
+                      <div class="att-info">
+                        <div class="att-name">SPC_Scholarship_Form_2026.zip (contains Grant_Setup.exe)</div>
+                        <div class="att-size">4.1 MB · Compressed Executable Archive</div>
+                      </div>
+                      <span class="att-dl">⬇</span>
+                    </div>
+
+                    <p>
+                      <span class="phish-spot" data-scene="campus" data-id="c5">
+                        NOTE: Your Windows Defender or Antivirus may show a red warning when opening Grant_Setup.exe. Please TURN OFF your Antivirus before running the file so your scholarship can process.
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: DETECTIVE LOG & RED FLAG QUIZ MODAL -->
+        <aside class="detective-sidebar">
+          <!-- Active Question Card (Appears when student clicks a hotspot) -->
+          <div class="quiz-box" id="phishQuizBox">
+            <div class="quiz-placeholder" id="quizPlaceholder">
+              <div class="placeholder-icon">🕵️‍♂️</div>
+              <h3>Click a Suspicious Element!</h3>
+              <p>
+                Click on any suspicious part of the email, SMS, or webpage on the left (sender address, URL, urgent threat, attachment, etc.).
+              </p>
+              <p class="small-muted">
+                When you click a red flag, a question will appear here asking you to identify <strong>why</strong> it is a sign of phishing!
+              </p>
+            </div>
+
+            <div class="quiz-active hidden" id="quizActiveContent">
+              <div class="quiz-kicker" id="quizElementTitle">SELECTED CLUE</div>
+              <div class="quiz-question" id="quizQuestionText">Why is this element suspicious?</div>
+              <div class="quiz-options" id="quizOptionsList"></div>
+              <div class="quiz-feedback hidden" id="quizFeedbackBox"></div>
+            </div>
+          </div>
+
+          <!-- Found Red Flags Checklist -->
+          <div class="found-log">
+            <div class="found-header">
+              <h4>Red Flags Identified in This Case</h4>
+              <span id="currentSceneCount">0 / 7</span>
+            </div>
+            <ul class="found-list" id="foundFlagsList"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         MODULE 2: PASSPHRASE FORGE & 3-2-1 BACKUP SIMULATOR
+    ======================================================================== -->
+    <section id="tab-forge" class="tab-panel">
+      <div class="module-intro">
+        <div>
+          <h2>Module 2 · Passphrase Forge &amp; 3-2-1 Backup Rescue</h2>
+          <p>
+            Practice Week 16 security skills: craft an unbreakable passphrase + 2FA setup, and design a <strong>3-2-1 Backup Plan</strong> that survives a live Ransomware &amp; Fire simulation!
+          </p>
+        </div>
+      </div>
+
+      <div class="two-col-grid">
+        <!-- LEFT CARD: PASSPHRASE FORGE -->
+        <div class="lab-card">
+          <div class="card-badge">PART A · PASSWORD MANAGEMENT</div>
+          <h3>🔐 The Passphrase Forge</h3>
+          <p class="card-desc">
+            Test different passwords below (<strong>never type your real password!</strong>). To complete this challenge, forge a password that reaches <strong>100% "Unbreakable"</strong> status and enable strong 2FA.
+          </p>
+
+          <div class="pw-input-wrap">
+            <input type="text" id="pwTestInput" placeholder="Try typing: Mango-Jeepney-84-Cloud!" autocomplete="off" />
+            <button type="button" class="btn-secondary small-btn" id="genPassphraseBtn">🎲 Generate Idea</button>
+          </div>
+
+          <div class="strength-meter-bar">
+            <div class="strength-fill" id="pwStrengthFill"></div>
+          </div>
+
+          <div class="pw-stats-row">
+            <div>
+              <span class="stat-label">STRENGTH RATING</span>
+              <strong id="pwRatingText" class="rating-weak">Too Weak</strong>
+            </div>
+            <div>
+              <span class="stat-label">ESTIMATED CRACK TIME</span>
+              <strong id="pwCrackTime">Instantly</strong>
+            </div>
+          </div>
+
+          <ul class="pw-criteria-list" id="pwCriteriaList">
+            <li id="crit-len12">⬜ At least 12+ characters long</li>
+            <li id="crit-len16">⬜ 16+ characters (Passphrase length bonus!)</li>
+            <li id="crit-mix">⬜ Mixes uppercase, lowercase, numbers &amp; symbols</li>
+            <li id="crit-nocommon">⬜ Avoids common words ('password', '123456', 'qwerty', 'admin')</li>
+          </ul>
+
+          <div class="mfa-selector-box">
+            <label for="mfaSelect"><strong>Select Your Multi-Factor Authentication (2FA) Method:</strong></label>
+            <select id="mfaSelect">
+              <option value="none">❌ None (Password only — Vulnerable if leaked)</option>
+              <option value="sms">📱 SMS OTP Text Code (Good, but vulnerable to SIM swap/smishing)</option>
+              <option value="app">🛡️ Authenticator App / Hardware Key / Passkey (Best Practice!)</option>
+            </select>
+          </div>
+
+          <div class="challenge-status" id="forgeStatusBanner">
+            ⏳ Challenge Status: Forge a 16+ character mixed passphrase AND select Authenticator App 2FA.
+          </div>
+        </div>
+
+        <!-- RIGHT CARD: 3-2-1 BACKUP & RANSOMWARE SIMULATOR -->
+        <div class="lab-card">
+          <div class="card-badge">PART B · DATA BACKUP &amp; RECOVERY</div>
+          <h3>💾 3-2-1 Backup vs. Disaster Simulator</h3>
+          <p class="card-desc">
+            You are writing your <code>Capstone_Thesis_Final.docx</code>. Select where you store your copies below to satisfy the <strong>3-2-1 Backup Rule</strong>, then test it against real disasters!
+          </p>
+
+          <div class="backup-slots">
+            <label class="slot-item locked">
+              <input type="checkbox" checked disabled />
+              <div>
+                <strong>1. Laptop Internal SSD (Working Copy)</strong>
+                <span>Media: Internal SSD · Location: On-site (In your backpack)</span>
+              </div>
+            </label>
+
+            <label class="slot-item">
+              <input type="checkbox" class="bk-check" id="bkSameDrive" data-media="ssd" data-offsite="false" data-plugged="true" />
+              <div>
+                <strong>2. Second Folder on Same Laptop (D:\ Drive Partition)</strong>
+                <span>Media: Same Internal SSD · Location: On-site (Same laptop)</span>
+              </div>
+            </label>
+
+            <label class="slot-item">
+              <input type="checkbox" class="bk-check" id="bkUsbPlugged" data-media="external" data-offsite="false" data-plugged="true" />
+              <div>
+                <strong>3. External USB Drive (Left Plugged Into Laptop 24/7)</strong>
+                <span>Media: External Drive · Location: On-site (Warning: Always connected!)</span>
+              </div>
+            </label>
+
+            <label class="slot-item">
+              <input type="checkbox" class="bk-check" id="bkUsbUnplugged" data-media="external" data-offsite="false" data-plugged="false" />
+              <div>
+                <strong>4. External USB / HDD (Unplugged After Backup)</strong>
+                <span>Media: External Drive · Location: On-site (Offline / Air-gapped)</span>
+              </div>
+            </label>
+
+            <label class="slot-item">
+              <input type="checkbox" class="bk-check" id="bkCloud" data-media="cloud" data-offsite="true" data-plugged="false" />
+              <div>
+                <strong>5. Encrypted Cloud Storage (Google Drive / OneDrive with 2FA)</strong>
+                <span>Media: Cloud Server · Location: Off-site (Protected remotely)</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- 3-2-1 Rule Live Indicators -->
+          <div class="rule-pills">
+            <div class="rule-pill" id="rule3">❌ 3 Copies</div>
+            <div class="rule-pill" id="rule2">❌ 2 Media Formats</div>
+            <div class="rule-pill" id="rule1">❌ 1 Off-Site Copy</div>
+          </div>
+
+          <div class="disaster-buttons">
+            <button type="button" class="btn-danger" id="simRansomwareBtn">🦠 Simulate Ransomware Attack</button>
+            <button type="button" class="btn-warn" id="simTheftBtn">🎒 Simulate Stolen Backpack</button>
+          </div>
+
+          <div class="sim-result-box" id="backupSimResult">
+            Configure your backups above, then click a disaster button to test if your thesis survives!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         MODULE 3: MY DEVICE SECURITY SCORECARD (PERSONAL AUDIT)
+    ======================================================================== -->
+    <section id="tab-audit" class="tab-panel">
+      <div class="module-intro">
+        <div>
+          <h2>Module 3 · My Device Security Scorecard (Personal Cyber Hygiene Audit)</h2>
+          <p>
+            Take out your smartphone or inspect your computer right now. Answer each of the <strong>10 audit items</strong> honestly to calculate your personal <strong>Cyber Hygiene Score</strong> and generate your custom action plan!
+          </p>
+        </div>
+      </div>
+
+      <div class="audit-layout">
+        <!-- LEFT: 10-POINT AUDIT CHECKLIST -->
+        <div class="audit-questions" id="auditChecklist">
+          <!-- Populated dynamically by script.js -->
+        </div>
+
+        <!-- RIGHT: LIVE GAUGE & PERSONALIZED RECOMMENDATIONS -->
+        <aside class="scorecard-panel">
+          <div class="scorecard-header">
+            <div class="sc-kicker">OFFICIAL CYBER HYGIENE SCORECARD</div>
+            <h3 id="scorecardStudentName">Student: Guest Student</h3>
+            <div class="sc-section" id="scorecardStudentSection">Section: Not specified</div>
+          </div>
+
+          <div class="gauge-box">
+            <div class="gauge-circle" id="hygieneGaugeCircle">
+              <div class="gauge-inner">
+                <span class="gauge-num" id="hygieneScoreNum">0%</span>
+                <span class="gauge-sub" id="hygieneGradeText">Unrated</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-select-row">
+            <label for="auditedDeviceType">Audited Device:</label>
+            <select id="auditedDeviceType">
+              <option value="Android Smartphone">📱 Android Smartphone</option>
+              <option value="iPhone (iOS)">📱 iPhone (iOS)</option>
+              <option value="Windows Laptop / PC">💻 Windows Laptop / PC</option>
+              <option value="MacBook (macOS)">💻 MacBook (macOS)</option>
+            </select>
+          </div>
+
+          <div class="recs-box">
+            <h4>🔧 Your Priority Fixes Tonight:</h4>
+            <ul id="auditRecsList" class="recs-list">
+              <li>Check the items on the left that currently apply to your device to see your personalized security recommendations.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         MODULE 4: FINAL LAB REPORT & PRINTABLE CERTIFICATE
+    ======================================================================== -->
+    <section id="tab-report" class="tab-panel">
+      <div class="certificate-card" id="printableReport">
+        <div class="cert-border">
+          <div class="cert-header">
+            <div class="cert-school">ST. PETER'S COLLEGE · COLLEGE OF COMPUTER STUDIES</div>
+            <h2>ITF 101 — Cyber Defense Simulator &amp; Device Audit Report</h2>
+            <p class="cert-sub">Final Term Laboratory Activity · Weeks 15 &amp; 16 (Cybersecurity Threats, Best Practices &amp; Passwords)</p>
+          </div>
+
+          <div class="cert-student-grid">
+            <div class="cert-field">
+              <span>STUDENT NAME</span>
+              <strong id="repName">______________________</strong>
+            </div>
+            <div class="cert-field">
+              <span>SECTION / BLOCK</span>
+              <strong id="repSection">____________</strong>
+            </div>
+            <div class="cert-field">
+              <span>DATE COMPLETED</span>
+              <strong id="repDate">—</strong>
+            </div>
+            <div class="cert-field highlight">
+              <span>OVERALL LAB SCORE</span>
+              <strong id="repTotalScore">0 / 100</strong>
+            </div>
+          </div>
+
+          <div class="cert-breakdown">
+            <div class="cert-stat-card">
+              <div class="cs-title">Module 1 · Spot the Phish Inspector</div>
+              <div class="cs-val" id="repPhishScore">0 / 24 Red Flags Found</div>
+              <div class="cs-sub" id="repPhishPts">0 / 40 pts</div>
+            </div>
+            <div class="cert-stat-card">
+              <div class="cs-title">Module 2 · Passphrase &amp; 3-2-1 Backup</div>
+              <div class="cs-val" id="repForgeScore">0 / 2 Challenges Passed</div>
+              <div class="cs-sub" id="repForgePts">0 / 30 pts</div>
+            </div>
+            <div class="cert-stat-card">
+              <div class="cs-title">Module 3 · Personal Device Scorecard</div>
+              <div class="cs-val" id="repAuditScore">Hygiene Score: 0%</div>
+              <div class="cs-sub" id="repAuditPts">0 / 30 pts (Audit Completed)</div>
+            </div>
+          </div>
+
+          <div class="cert-reflection">
+            <h4>📝 Student Action Commitment (Generated from Device Audit)</h4>
+            <p id="repCommitmentText">
+              Complete the 3 modules above to generate your personalized cybersecurity summary.
+            </p>
+          </div>
+
+          <div class="cert-actions no-print">
+            <button type="button" class="btn-primary" id="printReportBtn">🖨️ Print / Save Report as PDF</button>
+            <button type="button" class="btn-secondary" id="copySummaryBtn">📋 Copy Summary for Submission</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

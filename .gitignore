@@ -1,0 +1,6 @@
+# Ignore everything except the Cyber Defense Simulator website files
+*
+!.gitignore
+!index.html
+!style.css
+!script.js
